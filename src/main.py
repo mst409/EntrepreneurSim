@@ -1,9 +1,15 @@
 from fastapi import FastAPI
 from src.database import create_tables
 from src.auth import routes as auth
+from src.players import routes as players
+from src.businesses import routes as businesses
+from src.banking import routes as banking
 
-app = FastAPI()
+app = FastAPI(debug=True)
 app.include_router(auth.router)
+app.include_router(players.router)
+app.include_router(businesses.router)
+app.include_router(banking.router)
 
 
 # Create database tables on startup
