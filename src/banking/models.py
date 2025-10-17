@@ -11,6 +11,7 @@ class BankAccount(Base):
     id = Column(Uuid(as_uuid=True), primary_key=True, index=True)
     player = Column(Uuid, ForeignKey("players.id"))
     capital = Column(Float, nullable=False, default=30.00)
+    account_number = Column(Integer, nullable=False, index=True)
     type = Column(String)
 
 
@@ -21,4 +22,4 @@ class Transaction(Base):
     ammount = Column(Float, nullable=False)
     from_acc = Column(Uuid, ForeignKey("players.id"))
     to_acc = Column(Uuid, ForeignKey("businesses.id"))
-    created_at = Column(DateTime, default=dt.datetime.now(dt.timezone.utc))
+    made_at = Column(DateTime, default=dt.datetime.now(dt.timezone.utc))
