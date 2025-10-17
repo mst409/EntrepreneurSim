@@ -1,8 +1,10 @@
+from typing import Any, List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from src.auth.models import User
 from src.database import get_db
+from src.players.models import Player
 from .schemas import BusinessCreate, BusinessResponse
 from .models import Business
 
@@ -31,7 +33,7 @@ def create_bisness(body: BusinessCreate, db: Session = Depends(get_db)):
 
     return {"message": f'Buisness "{body.business_name}" created'}
 
-@router.get("/all", response_model=list[BusinessResponse])
+@router.get("/all")
 def get_all_buisness(db: Session = Depends(get_db)):
-    all_buisness = db.query(Business).all()
+    all_buisness = db.query(Business, Player, User).join(Business).all()
     return all_buisness

@@ -1,6 +1,6 @@
 from typing import Any
 from pydantic import BaseModel, Field, UUID4
-
+import uuid
 from src.auth.schemas import User
 
 
