@@ -44,7 +44,6 @@ def get_player_by_name(name: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404,
                             detail=f'player with name "{name}" not found')
     # TODO #2 find how to get all the data in one query with a join
-    player.user_name = user.user_name
 
     return player
 
