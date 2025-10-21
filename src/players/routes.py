@@ -8,25 +8,27 @@ from src.database import get_db
 from src.auth.models import User
 from src.players.models import Player
 from src.players.schemas import PlayerCreate, PlayerResponse
+from src.players.servies import auto_create_player
 
 
 router = APIRouter(prefix="/players", tags=["players"])
 
 
-@router.post("/create", response_model=dict[str,  str])
-def create_player(body: PlayerCreate, 
-                  db: Session = Depends(get_db)):
-    player = db.query(User).filter(User.user_name == body.user_name
-                                   or User.email == body.user_email).first()
-    if not player:
-        raise HTTPException(status_code=404, 
-                            detail=f"user with name '{body.user_name}' or email '{body.user_email}' not found")
-    new_palyer = Player(user_id = player.id)
-    db.add(new_palyer)
-    db.commit()
-    db.refresh(new_palyer)
-
-    return {"message": "new player created"}
+# @router.post("/create", response_model=dict[str,  str])
+# def create_player(body: PlayerCreate, 
+#                   db: Session = Depends(get_db)):
+    # player = db.query(User).filter(User.user_name == body.user_name
+    #                                or User.email == body.user_email).first()
+    # if not player:
+    #     raise HTTPException(status_code=404, 
+    #                         detail=f"user with name '{body.user_name}' or email '{body.user_email}' not found")
+    # new_palyer = Player(user_id = player.id)
+    # db.add(new_palyer)
+    # db.commit()
+    # db.refresh(new_palyer)
+#     created = auto_create_player(user_email=body.user_email, 
+#                                  user_name=body.user_name, db=db)
+# #     return created
 
 
 @router.get("/name/{name}", response_model=PlayerResponse)

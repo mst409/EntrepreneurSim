@@ -3,6 +3,8 @@ from datetime import timedelta
 from typing import Annotated
 from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
+
+from src.players.servies import auto_create_player
 from .schemas import CreateUser, Token
 from src.database import get_db
 from .services import authenticate_user, create_access_token, get_password_hash
@@ -27,8 +29,8 @@ async def signup(user: CreateUser, db=Depends(get_db)):
     
     db.add(new_user)
     db.commit()
-
-    return {"message": "User created successfully"}
+    player = auto_create_player(user_name=user.user_name, user_email=user.email, db=db)
+    return {"message": f"User {"and player" if player else ""} created successfully"}
 
 
 @router.post("/token", response_model=Token)
