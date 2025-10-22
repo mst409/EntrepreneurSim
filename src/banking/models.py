@@ -8,8 +8,8 @@ from src.database import Base
 class BankAccount(Base):
     __tablename__ = "bank_accounts"
 
-    id = Column(Uuid(as_uuid=True), primary_key=True, index=True)
-    player = Column(Uuid, ForeignKey("players.id"))
+    id = Column(Uuid(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
+    player = Column(Uuid, ForeignKey("players.id", ondelete="CASCADE"))
     capital = Column(Float, nullable=False, default=30.00)
     account_number = Column(Integer, nullable=False, index=True)
     type = Column(String)

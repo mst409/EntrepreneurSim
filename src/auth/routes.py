@@ -30,7 +30,7 @@ async def signup(user: CreateUser, db=Depends(get_db)):
     db.add(new_user)
     db.commit()
     player = auto_create_player(user_name=user.user_name, user_email=user.email, db=db)
-    return {"message": f"User {"and player" if player else ""} created successfully"}
+    return {"message": f"User {"and player" if player else ""} created successfully{f", Your bank account number is {player}" if player else ''}"}
 
 
 @router.post("/token", response_model=Token)

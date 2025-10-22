@@ -13,33 +13,15 @@ def create_account_number():
     return number
 
 
-def create_player_bank_account(player_id: Uuid, db: Session = Depends(get_db)):
-    '''Creates a new bank acoount FOR PLAYER, returns true if created and false if 
+def auto_create_bank_account(player_id, type: str, db: Session) -> bool | int:
+    '''Creates a new bank acoount for player or business, returns account number if created and false if 
     player id already has an account'''
-    if db.query(BankAccount).filter(
-        BankAccount.player == player_id 
-        and BankAccount.type == 'player'): return False
-    
+    account_number = create_account_number()
     new_account: BaseBankAccount = BankAccount(player = player_id, 
-                              type="player",
-                              account_number = create_account_number())
+                              account_number = account_number,
+                              type=type)
     db.add(new_account)
     db.commit()
     db.refresh(new_account)
+    return account_number
 
-
-    return True
-
-def create_buisness_bank_account(player_id: Uuid, db: Session = Depends(get_db)):
-    '''Creates a new bank acoount FOR BUISNESS, returns true if created and false if 
-    player id already has an account'''
-    if db.query(BankAccount).filter(BankAccount.player == player_id 
-                        and BankAccount.type == 'buisness'): return False
-    
-    new_account: BaseBankAccount = BankAccount(player = player_id, 
-                              type="buisness",
-                              account_number = create_account_number())
-    db.add(new_account)
-    db.commit()
-    db.refresh(new_account)
-    return True
