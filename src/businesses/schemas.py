@@ -1,7 +1,7 @@
 from typing import Any
 from pydantic import BaseModel, Field, UUID4
 import uuid
-from src.auth.schemas import User
+from src.players.schemas import PlayerBuisnessResponse
 
 
 class BaseBusiness(BaseModel):
@@ -10,9 +10,12 @@ class BaseBusiness(BaseModel):
 
 class BusinessCreate(BaseBusiness):
     owner_name: str
-    # owenr_id: int | None = Field(default=None)
 
 class BusinessResponse(BaseBusiness):
     # TODO add the owner name to the response model
-    owenr: int | UUID4
     id: UUID4
+    # !ERROR the owner returns null from the db
+    owner: PlayerBuisnessResponse | None
+
+    class Config:
+        from_attributes = True

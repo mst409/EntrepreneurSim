@@ -20,20 +20,20 @@ def create_bisness(body: BusinessCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=409, 
                             detail=f"Buissnes with name '{body.owner_name}' already found")
     # get owner id
-    owner = db.query(User).filter(User.user_name == body.owner_name).first()
-    if not owner:
+    owner_id = db.query(User).filter(User.user_name == body.owner_name).first()
+    if not owner_id:
         raise HTTPException(status_code=404, 
                             detail=f"User with name '{body.owner_name}' not found")
     
     new_buisiness = Business(**body.model_dump(exclude={"owner_name"}))
-    new_buisiness.owner = owner.id
+    new_buisiness.owner_id = owner_id.id
     db.add(new_buisiness)
     db.commit()
     db.refresh(new_buisiness)
 
     return {"message": f'Buisness "{body.business_name}" created'}
 
-@router.get("/all")
+@router.get("/all", response_model=list[BusinessResponse])
 def get_all_buisness(db: Session = Depends(get_db)):
-    all_buisness = db.query(Business, Player, User).join(Business).all()
+    all_buisness = db.query(Business).all()
     return all_buisness
