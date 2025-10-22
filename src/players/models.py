@@ -17,7 +17,9 @@ class Player(Base):
     created_at = Column(DateTime, default=dt.datetime.now(dt.timezone.utc))
     # bank_account = Column(Integer, ForeignKey("bank_accounts.id"), nullable=False)
 
-    user_info = relationship("User")
+    user_info = relationship("User", back_populates="player")
+    buisness = relationship("Business", back_populates="owner")
+
 
 class Employee(Base):
     __tablename__ = "employees"

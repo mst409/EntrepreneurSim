@@ -2,7 +2,7 @@ import uuid
 import datetime as dt
 from sqlalchemy import Column, String, Integer,Float, ForeignKey, DateTime
 from sqlalchemy.types import Uuid
-
+from sqlalchemy.orm import relationship
 from src.database import Base
 
 class BankAccount(Base):
@@ -13,6 +13,8 @@ class BankAccount(Base):
     capital = Column(Float, nullable=False, default=30.00)
     account_number = Column(Integer, nullable=False, index=True)
     type = Column(String)
+
+    player_info = relationship("Player")
 
 
 class Transaction(Base):

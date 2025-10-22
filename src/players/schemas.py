@@ -12,7 +12,8 @@ class PlayerCreate(BasePlayer):
     user_name: str | None
     user_email: EmailStr | None
 
-class PlayerBuisnessResponse(BasePlayer):
+class PlayerBuisnessResponse(BaseModel):
+    # !ERROR the owner returns null from the db
     id: UUID4
     created_at: datetime.datetime
 

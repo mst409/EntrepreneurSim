@@ -1,6 +1,8 @@
 from pydantic import BaseModel, Field, UUID4
 from enum import Enum
 
+from src.players.schemas import PlayerResponse
+
 class AccountTypes(str, Enum):
     Player = 'player'
     Buisness = 'buisness'
@@ -10,6 +12,7 @@ class BaseBankAccount(BaseModel):
     capital: float | None = Field(default=30.00)
     account_number: int = Field(max_digits=10)
     roll: AccountTypes
+    player_info: PlayerResponse
 
 
 class BankAccountResponse(BaseBankAccount):
