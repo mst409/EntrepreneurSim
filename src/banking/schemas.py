@@ -12,7 +12,6 @@ class BaseBankAccount(BaseModel):
     capital: float | None = Field(default=30.00)
     account_number: int = Field(max_digits=10)
     roll: AccountTypes
-    player_info: PlayerResponse
 
 
 class BankAccountResponse(BaseBankAccount):
