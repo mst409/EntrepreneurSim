@@ -18,7 +18,6 @@ class Player(Base):
     # bank_account = Column(Integer, ForeignKey("bank_accounts.id"), nullable=False)
 
     user_info = relationship("User", back_populates="player")
-    buisness = relationship("Business", back_populates="owner")
 
 
 class Employee(Base):

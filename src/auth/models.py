@@ -14,3 +14,4 @@ class User(Base):
     created_at = Column(DateTime, default=dt.datetime.now(dt.timezone.utc))
 
     player = relationship("Player", back_populates="user_info", cascade="all, delete-orphan")
+    buisness = relationship("Business",back_populates="owner")

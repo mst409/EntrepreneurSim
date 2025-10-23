@@ -8,8 +8,8 @@ class Business(Base):
 
     id = Column(Uuid(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     # TODO #3 chenge to UUID4 after the user id is chenged
-    owner_id = Column(Integer, ForeignKey("players.id", ondelete="CASCADE"))
+    owner_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
     business_name = Column(String(20), nullable=False, unique=True)
     # bank_account = Column(Uuid, ForeignKey("bank_accounts.id"))
 
-    owner = relationship("Player",back_populates="buisness")
+    owner = relationship("User",back_populates="buisness")

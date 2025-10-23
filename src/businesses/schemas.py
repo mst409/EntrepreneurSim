@@ -14,8 +14,7 @@ class BusinessCreate(BaseBusiness):
 class BusinessResponse(BaseBusiness):
     # TODO add the owner name to the response model
     id: UUID4
-    # !ERROR the owner returns null from the db
-    owner: PlayerBuisnessResponse | None
+    owner: PlayerBuisnessResponse
 
     class Config:
         from_attributes = True
