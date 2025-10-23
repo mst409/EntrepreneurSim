@@ -6,10 +6,10 @@ from src.auth.schemas import User
 
 
 class BasePlayer(BaseModel):
-    user_name: str | None
     pass
 
 class PlayerCreate(BasePlayer):
+    user_name: str | None
     user_email: EmailStr | None
 
 class PlayerBuisnessResponse(BasePlayer):
