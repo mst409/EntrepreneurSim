@@ -14,6 +14,7 @@ class PlayerCreate(BasePlayer):
 
 class PlayerBuisnessResponse(BasePlayer):
     id: UUID4
+    user_name: str | None
     created_at: datetime.datetime
 
     class Config: 

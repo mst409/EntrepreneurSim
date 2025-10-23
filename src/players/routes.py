@@ -16,7 +16,7 @@ router = APIRouter(prefix="/players", tags=["players"])
 
 
 @router.get("/name/{name}", response_model=PlayerResponse)
-def get_player_by_name(name: str, db: Session = Depends(get_db)):
+async def get_player_by_name(name: str, db: Session = Depends(get_db)):
 
     # get the user id for the name in the request
     user = db.query(User).filter(User.user_name == name).first()
@@ -35,7 +35,7 @@ def get_player_by_name(name: str, db: Session = Depends(get_db)):
 
 
 @router.delete("/delete/{name}", response_model=dict[str, str])
-def delete_player_by_name(name: str, db: Session = Depends(get_db)):
+async def delete_player_by_name(name: str, db: Session = Depends(get_db)):
         # get the user id for the name if the request
     user = db.query(User).filter(User.user_name == name).first()
     if not user: 
