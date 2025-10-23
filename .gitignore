@@ -1,3 +1,6 @@
 venv/
 __pycache__/
 *.db
+migrations/
+alembic.ini
+.pytest_cache/
