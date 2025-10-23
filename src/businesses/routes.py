@@ -13,7 +13,7 @@ router = APIRouter(prefix="/buisnesses", tags=["buisnesses"])
 
 
 @router.post("/create", response_model=dict[str, str])
-def create_bisness(body: BusinessCreate, db: Session = Depends(get_db)):
+async def create_bisness(body: BusinessCreate, db: Session = Depends(get_db)):
 
     # check if buisness name already exsits
     if db.query(Business).filter(Business.business_name == body.business_name).first():
@@ -34,6 +34,6 @@ def create_bisness(body: BusinessCreate, db: Session = Depends(get_db)):
     return {"message": f'Buisness "{body.business_name}" created'}
 
 @router.get("/all", response_model=list[BusinessResponse])
-def get_all_buisness(db: Session = Depends(get_db)):
+async def get_all_buisness(db: Session = Depends(get_db)):
     all_buisness = db.query(Business).all()
     return all_buisness
