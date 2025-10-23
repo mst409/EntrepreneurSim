@@ -13,7 +13,7 @@ class Player(Base):
     id = Column(Uuid(as_uuid=True), primary_key=True, 
                 index=True, default=uuid.uuid4)
     # TODO change the column type to uuid
-    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
+    user_id = Column(Uuid, ForeignKey("users.id", ondelete="CASCADE"))
     created_at = Column(DateTime, default=dt.datetime.now(dt.timezone.utc))
     # bank_account = Column(Integer, ForeignKey("bank_accounts.id"), nullable=False)
 

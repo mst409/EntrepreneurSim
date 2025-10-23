@@ -13,7 +13,7 @@ class PlayerCreate(BasePlayer):
     user_email: EmailStr | None
 
 class PlayerBuisnessResponse(BasePlayer):
-    id: UUID4 | int
+    id: UUID4
     created_at: datetime.datetime
 
     class Config: 
