@@ -55,3 +55,9 @@ dependencies = [
     "watchfiles==1.1.1",
     "websockets==15.0.1",
 ]
+
+[dependency-groups]
+dev = [
+    "alembic==1.17.0",
+    "pytest==8.4.2",
+]
