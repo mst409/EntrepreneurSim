@@ -5,7 +5,7 @@ from src.players.schemas import PlayerResponse
 
 class AccountTypes(str, Enum):
     Player = 'player'
-    Buisness = 'buisness'
+    Business = 'business'
 
 
 class BaseBankAccount(BaseModel):

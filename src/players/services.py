@@ -1,10 +1,8 @@
-from typing import Any
-from fastapi import Depends, HTTPException
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 
 from src.auth.models import User
-from src.database import get_db
 from src.players.models import Player
 from src.banking.services import auto_create_bank_account
 

@@ -4,7 +4,7 @@ from typing import Annotated
 from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from src.players.servies import auto_create_player
+from src.players.services import auto_create_player
 from .schemas import CreateUser, Token
 from src.database import get_db
 from .services import authenticate_user, create_access_token, get_password_hash

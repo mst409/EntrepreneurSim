@@ -1,6 +1,6 @@
 import uuid
 import datetime as dt
-from sqlalchemy import Column, String, Integer,Float, ForeignKey, DateTime
+from sqlalchemy import Column, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Uuid
 
