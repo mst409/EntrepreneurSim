@@ -29,7 +29,7 @@ def test_create_user(client: TestClient, db_session: Session):
     # check for the id, created_at and user_info fields 
     assert isinstance(get_user_response["id"], str)
     assert isinstance(get_user_response["created_at"], str)
-    # check if the palyers username is the created user_name
+    # check if the players username is the created user_name
     assert get_user_response["user_info"]["user_name"] == "testuser"
     assert isinstance(get_user_response["user_info"], dict)
 
@@ -45,8 +45,8 @@ def test_create_user(client: TestClient, db_session: Session):
 
 
 
-def test_email_already_registerd(client: TestClient):
-    '''test creating a user with a diffrent username and email 
+def test_email_already_registered(client: TestClient):
+    '''test creating a user with a different username and email 
     that is already taken'''
 
     client.post("/auth/signup", json={
