@@ -9,31 +9,31 @@ from .schemas import BusinessCreate, BusinessResponse
 from .models import Business
 
 
-router = APIRouter(prefix="/buisnesses", tags=["buisnesses"])
+router = APIRouter(prefix="/businesses", tags=["businesses"])
 
 
 @router.post("/create", response_model=dict[str, str])
-async def create_bisness(body: BusinessCreate, db: Session = Depends(get_db)):
+async def create_business(body: BusinessCreate, db: Session = Depends(get_db)):
 
-    # check if buisness name already exsits
+    # check if business name already exists
     if db.query(Business).filter(Business.business_name == body.business_name).first():
         raise HTTPException(status_code=409, 
-                            detail=f"Buissnes with name '{body.owner_name}' already found")
+                            detail=f"Busses with name '{body.owner_name}' already found")
     # get owner id
     owner = db.query(User).filter(User.user_name == body.owner_name).first()
     if not owner:
         raise HTTPException(status_code=404, 
                             detail=f"User with name '{body.owner_name}' not found")
     
-    new_buisiness = Business(**body.model_dump(exclude={"owner_name"}))
-    new_buisiness.owner_id = owner.id
-    db.add(new_buisiness)
+    new_business = Business(**body.model_dump(exclude={"owner_name"}))
+    new_business.owner_id = owner.id
+    db.add(new_business)
     db.commit()
-    db.refresh(new_buisiness)
+    db.refresh(new_business)
 
-    return {"message": f'Buisness "{body.business_name}" created'}
+    return {"message": f'Business "{body.business_name}" created'}
 
 @router.get("/all", response_model=list[BusinessResponse])
-async def get_all_buisness(db: Session = Depends(get_db)):
-    all_buisness = db.query(Business).all()
-    return all_buisness
+async def get_all_business(db: Session = Depends(get_db)):
+    all_business = db.query(Business).all()
+    return all_business
