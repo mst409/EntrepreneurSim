@@ -17,5 +17,8 @@ class CreateUser(BaseModel):
     password: str = Field(..., min_length=8)
     
 class User(BaseModel):
-    username: str
+    user_name: str
     email: str | None = None
+
+    class Config:
+        from_attributes = True
