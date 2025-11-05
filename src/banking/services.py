@@ -1,17 +1,11 @@
-from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from random import randrange
-
-from sqlalchemy import Uuid
-from src.database import get_db
+import uuid
 from .models import BankAccount
-from .schemas import AccountTypes, BaseBankAccount
+from .schemas import BaseBankAccount
 
-def create_account_number():
-    # TODO #8 fins a better way of makeing an account number without 
-    # risking repeating the same number
-    number = randrange(start=10**10, stop=10**11-1)
+def create_account_number() -> int:
+    number: int = int(uuid.uuid4().hex[:10]) 
     return number
 
 
