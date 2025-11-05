@@ -1,11 +1,11 @@
 from sqlalchemy.orm import Session
 
-import uuid
+from random import choice
 from .models import BankAccount
 from .schemas import BaseBankAccount
 
 def create_account_number() -> int:
-    number: int = int(uuid.uuid4().hex[:10]) 
+    number = choice(range(10**9, 10**10))
     return number
 
 
