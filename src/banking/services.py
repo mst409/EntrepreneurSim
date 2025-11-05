@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from random import choice
+from secrets import choice
 from .models import BankAccount
 from .schemas import BaseBankAccount
 
