@@ -9,8 +9,9 @@ from .models import BankAccount
 from .schemas import AccountTypes, BaseBankAccount
 
 def create_account_number():
-    # TODO #8 fins a better way of makeing an account number without 
+    # TODO #8 find a better way of makeing an account number without 
     # risking repeating the same number
+    # add a quare to the db makeing sure that the number isnt repeating
     number = randrange(start=10**10, stop=10**11-1)
     return number
 

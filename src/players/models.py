@@ -18,7 +18,7 @@ class Player(Base):
     # bank_account = Column(Integer, ForeignKey("bank_accounts.id"), nullable=False)
 
     user_info = relationship("User", back_populates="player")
-
+    # add relationship to bank account 
 
 class Employee(Base):
     __tablename__ = "employees"
