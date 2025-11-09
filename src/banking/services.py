@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-
+from sqlalchemy.exc import IntegrityError
 from secrets import choice
 from .models import BankAccount
 from .schemas import BaseBankAccount
@@ -14,9 +14,13 @@ def auto_create_bank_account(player_id, type: str, db: Session) -> bool | int:
     player id already has an account'''
     account_number = create_account_number()
     new_account: BaseBankAccount = BankAccount(player = player_id, 
-                              account_number = account_number,
-                              type=type)
-    db.add(new_account)
+                            account_number = account_number,
+                            type=type)
+    try:
+        db.add(new_account)
+    except IntegrityError:
+        # try to get a diffrent acc number
+        ... 
     db.commit()
     db.refresh(new_account)
     return account_number
