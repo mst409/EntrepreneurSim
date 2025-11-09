@@ -11,7 +11,7 @@ class BankAccount(Base):
     id = Column(Uuid(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     player = Column(Uuid, ForeignKey("players.id", ondelete="CASCADE"))
     capital = Column(Float, nullable=False, default=30.00)
-    account_number = Column(Integer, nullable=False, index=True)
+    account_number = Column(Integer, nullable=False, index=True, unique=True)
     type = Column(String)
 
     player_info = relationship("Player")
