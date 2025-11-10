@@ -22,7 +22,7 @@ class Transaction(Base):
     '''A transaction table, must provide amount, from_acc and to_acc'''
     id = Column(Uuid(as_uuid=True), primary_key=True, index=True)
     amount = Column(Float, nullable=False)
-    # need a foreign key to players and businesses bank account, not to sigel palyer
-    from_acc = Column(Uuid, ForeignKey("players.id"))
-    to_acc = Column(Uuid, ForeignKey("businesses.id"))
+    # need a foreign key to players and businesses bank account, not to single player
+    from_acc = Column(Uuid, ForeignKey("bank_accounts.id"))
+    to_acc = Column(Uuid, ForeignKey("bank_accounts.id"))
     made_at = Column(DateTime, default=dt.datetime.now(dt.timezone.utc))
