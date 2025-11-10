@@ -19,8 +19,9 @@ def auto_create_bank_account(player_id, type: str, db: Session) -> bool | int:
     try:
         db.add(new_account)
     except IntegrityError:
-        # try to get a diffrent acc number
-        ... 
+        # try to get a different acc number
+        db.rollback()
+        auto_create_bank_account(player_id=player_id, type=type, db=db)
     db.commit()
     db.refresh(new_account)
     return account_number
