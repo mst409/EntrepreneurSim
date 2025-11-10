@@ -9,7 +9,7 @@ def create_account_number() -> int:
     return number
 
 
-def auto_create_bank_account(player_id, type: str, db: Session) -> bool | int:
+def auto_create_bank_account(player_id, acc_type: str, db: Session) -> bool | int:
     '''Creates a new bank account for player or business, returns account number if created and false if 
     player id already has an account'''
     account_number = create_account_number()
@@ -21,7 +21,7 @@ def auto_create_bank_account(player_id, type: str, db: Session) -> bool | int:
     except IntegrityError:
         # try to get a different acc number
         db.rollback()
-        auto_create_bank_account(player_id=player_id, type=type, db=db)
+        auto_create_bank_account(player_id=player_id, acc_type=acc_type, db=db)
     db.commit()
     db.refresh(new_account)
     return account_number

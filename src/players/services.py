@@ -23,5 +23,5 @@ def auto_create_player(user_name, user_email,
     db.add(new_player)
     db.commit()
     db.refresh(new_player)
-    account_number = auto_create_bank_account(player_id=new_player.id, type="player", db=db)
+    account_number = auto_create_bank_account(player_id=new_player.id, acc_type="player", db=db)
     return account_number
