@@ -12,7 +12,7 @@ class BankAccount(Base):
     player = Column(Uuid, ForeignKey("players.id", ondelete="CASCADE"))
     capital = Column(Float, nullable=False, default=30.00)
     account_number = Column(Integer, nullable=False, index=True, unique=True)
-    type = Column(String)
+    acc_type = Column(String)
 
     player_info = relationship("Player")
 

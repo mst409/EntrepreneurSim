@@ -15,7 +15,7 @@ def auto_create_bank_account(player_id, acc_type: str, db: Session) -> bool | in
     account_number = create_account_number()
     new_account: BaseBankAccount = BankAccount(player = player_id, 
                             account_number = account_number,
-                            type=type)
+                            acc_type=acc_type)
     try:
         db.add(new_account)
     except IntegrityError:
