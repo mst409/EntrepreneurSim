@@ -15,7 +15,8 @@ class CreateUser(BaseModel):
     user_name: str
     email: EmailStr
     password: str = Field(..., min_length=8)
-    
+    bio: str = Field(max_length=255) 
+    profile: str = Field(max_length=255) 
 class User(BaseModel):
     user_name: str
     email: str | None = None
