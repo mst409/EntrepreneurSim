@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, DateTime, Float, Integer, String, ForeignKey, Uuid
+from sqlalchemy import Column, DateTime, Float, String, ForeignKey, Uuid
 from sqlalchemy.orm import relationship
 from src.database import Base
 
@@ -11,7 +11,8 @@ class Business(Base):
     business_name = Column(String(20), nullable=False, unique=True)
     bank_account = Column(Uuid, ForeignKey("bank_accounts.id", ondelete="CASCADE"))
     payroll = Column(DateTime, nullable=False, index=True)
-
+    # this will be a 1 to many relationship, from one business to many players
+    payment = Column(Uuid, ForeignKey("players.id"))
     
     owner = relationship("Player", back_populates="business_info", foreign_keys=[owner_id])
     job_info = relationship("Employee", back_populates="business")

@@ -14,6 +14,8 @@ class Player(Base):
                 index=True, default=uuid.uuid4)
     name = Column(String(15))
     bank_account_id = Column(Integer, ForeignKey("bank_accounts.id"), nullable=False)
-    job = Column(ForeignKey(""))
+    job = Column(ForeignKey("employees.id", ondelete="CASCADE"))
+    
+    
     user_info = relationship("User", back_populates="player_id")
     bank_account = relationship("bank_accounts", back_populates="player", foreign_keys=[bank_account_id])
