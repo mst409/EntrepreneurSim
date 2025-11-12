@@ -12,14 +12,8 @@ class Player(Base):
 
     id = Column(Uuid(as_uuid=True), primary_key=True, 
                 index=True, default=uuid.uuid4)
-    # TODO change the column type to uuid
-    user_id = Column(Uuid, ForeignKey("users.id", ondelete="CASCADE"))
-    created_at = Column(DateTime, default=dt.datetime.now(dt.timezone.utc))
-    # bank_account = Column(Integer, ForeignKey("bank_accounts.id"), nullable=False)
-
-    user_info = relationship("User", back_populates="player")
-
-
-class Employee(Base):
-    __tablename__ = "employees"
-    id = Column(Uuid(as_uuid=True), primary_key=True, index=True)
+    name = Column(String(15))
+    bank_account_id = Column(Integer, ForeignKey("bank_accounts.id"), nullable=False)
+    job = Column(ForeignKey(""))
+    user_info = relationship("User", back_populates="player_id")
+    bank_account = relationship("bank_accounts", back_populates="player", foreign_keys=[bank_account_id])
