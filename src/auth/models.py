@@ -9,14 +9,15 @@ from src.database import Base
 class User(Base):
     __tablename__ = "users"
 
+
     id = Column(Uuid(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
+    name =Column(String)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     created_at = Column(DateTime, default=dt.datetime.now(dt.timezone.utc))
-    bio = Column(String(255), null=True)
+    bio = Column(String(255), nullable=True)
     #TODO add an option for a profile pic
-    profile = Column(String(255), null=True)
+    profile = Column(String(255), nullable=True)
     
-    player_id = Column(Uuid, ForeignKey("players.id"), nullable=True)
     
-    player = relationship("Player", back_populates="user_info", cascade="all, delete-orphan", foreign_keys=[player_id])
+    player = relationship("Player", back_populates="user_info")
