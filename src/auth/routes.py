@@ -4,12 +4,11 @@ from typing import Annotated
 from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from src.players.servies import auto_create_player
-from .schemas import CreateUser, Token
+from src.players.services import auto_create_player
+from src.auth.schemas import CreateUser, Token
 from src.database import get_db
-from .services import authenticate_user, create_access_token, get_password_hash
-from .models import User
-
+from src.auth.services import authenticate_user, create_access_token, get_password_hash
+from src.auth.models import User
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -21,7 +20,7 @@ async def signup(user: CreateUser, db=Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     
     new_user = User(
-        user_name = user.user_name,
+        name = user.name,
         email = user.email,
         hashed_password = get_password_hash(user.password),
         created_at = dt.datetime.now(dt.timezone.utc)
@@ -29,8 +28,8 @@ async def signup(user: CreateUser, db=Depends(get_db)):
     
     db.add(new_user)
     db.commit()
-    player = auto_create_player(user_name=user.user_name, user_email=user.email, db=db)
-    return {"message": f"User {"and player" if player else ""} created successfully{f", Your bank account number is {player}" if player else ''}"}
+    auto_create_player(user=new_user, db=db)
+    return {"message": "User created successfully"}
 
 
 @router.post("/token", response_model=Token)
