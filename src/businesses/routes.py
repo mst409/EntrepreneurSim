@@ -1,4 +1,3 @@
-from typing import Any, List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from src.auth.models import User
@@ -25,6 +24,8 @@ async def create_business(body: BusinessCreate, db: Session = Depends(get_db)):
     
     
     new_business = Business(**body.model_dump(exclude={"owner_name"}))
+    #TODO #13 as of now, the new business id will replace the current business id, that means the one player can have one business, if we want to allow more then one business for player we will need a one to many or m2m relationship 
+    owner.business_info = new_business 
     db.add(new_business)
     db.commit()
     db.refresh(new_business)
@@ -33,5 +34,6 @@ async def create_business(body: BusinessCreate, db: Session = Depends(get_db)):
 
 @router.get("/all", response_model=list[BusinessResponse])
 async def get_all_business(db: Session = Depends(get_db)):
+    #TODO add more date like owner ext to the response 
     all_business = db.query(Business).all()
     return all_business
