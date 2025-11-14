@@ -11,15 +11,18 @@ class TokenData(BaseModel):
     username: str | None = None
 
 
-class CreateUser(BaseModel):
-    user_name: str
-    email: EmailStr
-    password: str = Field(..., min_length=8)
-    bio: str = Field(max_length=255) 
-    profile: str = Field(max_length=255) 
-class User(BaseModel):
-    user_name: str
-    email: str | None = None
+class UserBase(BaseModel):
+    name: str
+    email: EmailStr 
+    bio: str | None = Field(max_length=255) 
+    profile: str | None = Field(max_length=255) 
 
     class Config:
         from_attributes = True
+
+
+class CreateUser(UserBase):
+    password: str
+    
+class UserResponse(UserBase):
+    pass
