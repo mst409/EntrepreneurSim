@@ -1,18 +1,14 @@
-from typing import Any
-from fastapi import Depends, HTTPException
-from sqlalchemy import Uuid
 from sqlalchemy.orm import Session
 from src.auth.models import User
-from src.banking.models import BankAccount
-from src.database import get_db
 from src.players.models import Player
 from src.banking.services import create_acc
+from src.players.schemas import PlayerResponse
 
 
 
+def auto_create_player(user: User, db: Session) -> PlayerResponse:
+    '''Create a player provided a user object, return a new_player obj if created'''
 
-def auto_create_player(user: User, db: Session) -> bool | int:
-    '''create a player with a bank account when a user is created, returns account number if crated and False if not'''
     # create new player
     new_player = Player(user_info = user)
     # create new bank account 
@@ -20,9 +16,5 @@ def auto_create_player(user: User, db: Session) -> bool | int:
     # link the new account to the new player via the "bank account" relationship in the player model
     new_player.bank_account = new_acc
     db.add(new_player)
-   
-    
-    #new_player.bank_account = account
-
     db.commit()
-    return True
+    return new_player 
