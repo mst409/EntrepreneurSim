@@ -1,8 +1,8 @@
 import datetime
 from pydantic import BaseModel, Field, UUID4, EmailStr
 
-from src.auth.schemas import User
-
+from src.auth.schemas import UserBase
+from src.banking.schemas import BankAccountResponse 
 
 
 class BasePlayer(BaseModel):
@@ -12,7 +12,7 @@ class PlayerCreate(BasePlayer):
     user_name: str | None
     user_email: EmailStr | None
 
-class PlayerBuisnessResponse(BasePlayer):
+class PlayerBusinessResponse(BasePlayer):
     id: UUID4
     user_name: str | None
     created_at: datetime.datetime
@@ -23,8 +23,7 @@ class PlayerBuisnessResponse(BasePlayer):
 
 class PlayerResponse(BasePlayer):
     id: UUID4
-    created_at: datetime.datetime
-    user_info: User
-
+    user_info: UserBase 
+    bank_account: BankAccountResponse   
     class Config: 
         from_attributes = True
