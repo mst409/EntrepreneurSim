@@ -12,12 +12,14 @@ class Player(Base):
 
     id = Column(Uuid(as_uuid=True), primary_key=True, 
                 index=True, default=uuid.uuid4)
-    user_name = Column(String(15), nullable=True)
+    #user_name = Column(String(15), nullable=True)
     user_id = Column(Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=True)
     bank_account_id = Column(Uuid, ForeignKey("bank_accounts.id"), nullable=True)
+    business_id = Column(Uuid, ForeignKey("businesses.id"), nullable=True)
 
-    
+    user_info = relationship("User", back_populates="player", uselist=False, foreign_keys=[user_id])
 
     bank_account = relationship("BankAccount", back_populates="player", foreign_keys=[bank_account_id])
 
-    user_info = relationship("User", back_populates="player", uselist=False, foreign_keys=[user_id])
+    
+    business_info = relationship("Business", back_populates="owner", foreign_keys=[business_id])
