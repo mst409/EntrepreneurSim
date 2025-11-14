@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field, UUID4, EmailStr
 
 from src.auth.schemas import UserBase
 from src.banking.schemas import BankAccountResponse 
-
+from src.businesses.schemas import BusinessResponse
 
 class BasePlayer(BaseModel):
     pass
@@ -25,5 +25,6 @@ class PlayerResponse(BasePlayer):
     id: UUID4
     user_info: UserBase 
     bank_account: BankAccountResponse   
+    business_info: BusinessResponse
     class Config: 
         from_attributes = True
