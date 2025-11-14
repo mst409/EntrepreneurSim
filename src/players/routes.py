@@ -26,19 +26,9 @@ async def get_player_by_name(name: str, db: Session = Depends(get_db)):
 
 @router.delete("/delete/{name}", response_model=dict[str, str])
 async def delete_player_by_name(name: str, db: Session = Depends(get_db)):
-        # get the user id for the name if the request
-    user = db.query(User).filter(User.user_name == name).first()
-    if not user: 
-        raise HTTPException(status_code=404, 
-                            detail=f"player with name '{name}' not found")
-    
-    # get the player obj with the id
-    player = db.query(Player).filter(Player.user_id == user.id).first()
-    if not player:
-        raise HTTPException(status_code=404,
-                            detail=f'player with name "{name}" not found')
-    
+    #delete player (not user) my name
+    player: Player = db.query(Player).join(Player.user_info).filter(User.name == name).first()
     db.delete(player)
     db.commit()
 
-    return {"message": f"player '{player.id}' deleted"}
+    return {"message": f"player '{player.id}' deleted"} # pyright: ignore[reportOptionalMemberAccess]
