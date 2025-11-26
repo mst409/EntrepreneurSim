@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from src.auth.models import User
 from src.database import get_db
-from src.players.models import Player
+from src.players.models import Player, Owners
 from .schemas import BusinessCreate, BusinessResponse
 from .models import Business
 
@@ -21,12 +21,15 @@ async def create_business(body: BusinessCreate, db: Session = Depends(get_db)):
     owner = db.query(Player).join(Player.user_info).filter(User.name == body.owner_name).first()
     if not owner:
         raise HTTPException(detail=f"Player {body.owner_name} not found, to create a business you must have a player", status_code=404)
-    
-    
+ 
+ 
     new_business = Business(**body.model_dump(exclude={"owner_name"}))
     #TODO #13 as of now, the new business id will replace the current business id, that means the one player can have one business, if we want to allow more then one business for player we will need a one to many or m2m relationship 
-    owner.business_info = new_business 
     db.add(new_business)
+    # link the owner/player to the business
+    db.commit()
+    link = Owners(player_id = owner.id, business_id = new_business.id)
+    db.add(link)
     db.commit()
     db.refresh(new_business)
 

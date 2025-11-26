@@ -15,14 +15,13 @@ class Business(Base):
     # this will be a 1 to many relationship, from one business to many players
     #payment = Column(Uuid, ForeignKey("players.id"))
 
-    owner = relationship("Player", back_populates="business_info")    
 
+    owner = relationship("Owners", back_populates="business")
+    employee = relationship("Employee", back_populates="business")
     #bank_account = relationship("BankAccount", back_populates="player", foreign_keys=[bank_account_id])
 
     #job_info = relationship("Employee", back_populates="business")
 
-    
-'''
 class Employee(Base):
     __tablename__ = "employees"
 
@@ -32,8 +31,6 @@ class Employee(Base):
     wage_type = Column(String(10))
     player_id = Column(Uuid, ForeignKey("players.id", ondelete="CASCADE"))
     business_id = Column(Uuid, ForeignKey("businesses.id", ondelete="CASCADE"))
-    
-    player = relationship("Player", back_populates="job_info",foreign_keys=[player_id])
-    business = relationship("Business", back_populates="job_info", foreign_keys=[business_id])
-    
-'''    
+
+    player = relationship("Player", back_populates="employer",foreign_keys=[player_id])
+    business = relationship("Business", back_populates="employee", foreign_keys=[business_id])

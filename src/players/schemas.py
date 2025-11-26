@@ -28,3 +28,16 @@ class PlayerResponse(BasePlayer):
     business_info: BusinessResponse
     class Config: 
         from_attributes = True
+
+class EmployeeBase(BaseModel):
+    roll: str
+    salary: float
+    # make an enum for wage_types
+    wage_type: str
+
+class EmployeeCreate(EmployeeBase):
+    player_id: UUID4
+    business_id: UUID4
+
+class EmployeeResponse(EmployeeBase):
+    pass
