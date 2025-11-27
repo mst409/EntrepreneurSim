@@ -1,6 +1,6 @@
 from typing import List
 import uuid
-from sqlalchemy import Column, DateTime, Float, String, ForeignKey, Uuid
+from sqlalchemy import Column, Float, String, ForeignKey, Uuid
 from sqlalchemy.orm import relationship, Mapped
 from src.database import Base
 

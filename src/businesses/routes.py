@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from src.auth.models import User
 from src.database import get_db
-from src.players.models import Player, players_businesses
+from src.players.models import Player
 from .schemas import BusinessCreate, BusinessResponse
 from .models import Business
 
