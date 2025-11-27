@@ -9,9 +9,8 @@ from src.database import Base
 players_businesses = Table(
     'owners',
     Base.metadata,
-    Column("id", primary_key=True),
-    Column("player_id", ForeignKey("players.id")),
-    Column("business", ForeignKey("businesses.id")),
+    Column("player_id", ForeignKey("players.id"), primary_key=True),
+    Column("business_id", ForeignKey("businesses.id"),primary_key=True)
 )
 
 class Player(Base):
@@ -27,18 +26,5 @@ class Player(Base):
 
     bank_account = relationship("BankAccount", back_populates="player", foreign_keys=[bank_account_id])
     
-    # business: Mapped[list["Business"]] = relationship(secondary=players_businesses, back_populates="owner")
+    business: Mapped[list["Business"]] = relationship(secondary=players_businesses, back_populates="owner") # type: ignore
     employer = relationship("Employee", back_populates="player")
-
-# class Owners(Base):
-#     __tablename__ = "owners"
-
-#     id = Column(Uuid(as_uuid=True), primary_key=True, 
-#                 index=True, default=uuid.uuid4)
-
-#     player_id = Column(Uuid, ForeignKey("players.id", ondelete="CASCADE"))
-#     business_id = Column(Uuid, ForeignKey("businesses.id", ondelete="CASCADE"))
-
-#     player = relationship("Player", back_populates="business", foreign_keys=[player_id])
-
-#     business = relationship("Business", back_populates="owner", foreign_keys=[business_id])

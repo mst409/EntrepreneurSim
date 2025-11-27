@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field, UUID4, EmailStr
 
 from src.auth.schemas import UserBase
 from src.banking.schemas import BankAccountResponse 
-from src.businesses.schemas import BusinessResponse
+# from src.businesses.schemas import BusinessResponse
 
 class BasePlayer(BaseModel):
     pass

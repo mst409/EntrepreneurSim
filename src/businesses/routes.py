@@ -32,12 +32,9 @@ async def create_business(body: BusinessCreate, db: Session = Depends(get_db)):
         )
 
     new_business = Business(**body.model_dump(exclude={"owner_name"}))
-    # TODO #13 as of now, the new business id will replace the current business id, that means the one player can have one business, if we want to allow more then one business for player we will need a one to many or m2m relationship
     db.add(new_business)
     # link the owner/player to the business
-    db.commit()
-    link = players_businesses(player_id=owner.id, business_id=new_business.id) # pyright: ignore[reportCallIssue]
-    db.add(link)
+    owner.business.append(new_business)
     db.commit()
     db.refresh(new_business)
 
