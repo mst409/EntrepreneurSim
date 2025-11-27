@@ -14,6 +14,7 @@ from src.auth.schemas import UserResponse
 from src.players.schemas import PlayerCreate, PlayerResponse
 from src.database import get_db
 from src.players.services import auto_create_player
+from src.players.schemas import PlayerResponse
 
 
 router = APIRouter(prefix="/players", tags=["players"])

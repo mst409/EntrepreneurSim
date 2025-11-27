@@ -1,6 +1,7 @@
 import datetime
 from typing import Any, List
 from pydantic import BaseModel, Field, UUID4, EmailStr
+from pydantic import BaseModel, UUID4, EmailStr
 
 from src.auth.schemas import UserBase
 from src.banking.schemas import BankAccountResponse

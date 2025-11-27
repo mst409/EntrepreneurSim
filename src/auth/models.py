@@ -21,3 +21,6 @@ class User(Base):
     
     
     player = relationship("Player", back_populates="user_info")
+
+    player = relationship("Player", back_populates="user_info", cascade="all, delete-orphan")
+    business = relationship("Business",back_populates="owner")

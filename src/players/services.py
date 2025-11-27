@@ -1,20 +1,27 @@
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
+
+
 from src.auth.models import User
 from src.players.models import Player
-from src.banking.services import create_acc
-from src.players.schemas import PlayerResponse
+from src.banking.services import auto_create_bank_account
 
 
 
-def auto_create_player(user: User, db: Session) -> PlayerResponse:
-    '''Create a player provided a user object, return a new_player obj if created'''
 
-    # create new player
-    new_player = Player(user_info = user)
-    # create new bank account 
-    new_acc = create_acc(acc_type="player", db=db)
-    # link the new account to the new player via the "bank account" relationship in the player model
-    new_player.bank_account = new_acc
+def auto_create_player(user_name, user_email, 
+                  db: Session) -> bool | int:
+    '''create a player with a bank account when a user is created, returns account number if 
+    crated and False if not'''
+    user = db.query(User).filter(User.email == user_email or 
+                                 User.user_name == user_name).first()
+    if not user: 
+        raise HTTPException(status_code=404, 
+                            detail=f"user {user_name} not found")
+    user_id = user.id
+    new_player = Player(user_id = user_id)
     db.add(new_player)
     db.commit()
-    return new_player 
+    db.refresh(new_player)
+    account_number = auto_create_bank_account(player_id=new_player.id, type="player", db=db)
+    return account_number
