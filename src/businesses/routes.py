@@ -1,10 +1,8 @@
-from typing import Any, List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-
 from src.auth.models import User
 from src.database import get_db
-from src.players.models import Player
+from src.players.models import Player, Owners
 from .schemas import BusinessCreate, BusinessResponse
 from .models import Business
 
@@ -21,7 +19,7 @@ async def create_business(body: BusinessCreate, db: Session = Depends(get_db)):
                             detail=f"Busses with name '{body.owner_name}' already found")
     # get owner id
     owner = db.query(User).filter(User.user_name == body.owner_name).first()
-    if not owner:
+    if owner:
         raise HTTPException(status_code=404, 
                             detail=f"User with name '{body.owner_name}' not found")
     
@@ -35,5 +33,6 @@ async def create_business(body: BusinessCreate, db: Session = Depends(get_db)):
 
 @router.get("/all", response_model=list[BusinessResponse])
 async def get_all_business(db: Session = Depends(get_db)):
+    #TODO add more date like owner ext to the response 
     all_business = db.query(Business).all()
     return all_business
