@@ -1,7 +1,6 @@
 from enum import Enum
 from pydantic import BaseModel, Field, UUID4
 
-from src.players.models import Owners
 
 
 class PayRoll(str, Enum):
