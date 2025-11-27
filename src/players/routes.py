@@ -1,15 +1,11 @@
-from typing import Any
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import UUID4
 from sqlalchemy.orm import Session
 
 
 from src.database import get_db
 from src.auth.models import User
-from src.auth.schemas import UserResponse
 from src.players.models import Player
-from src.players.schemas import PlayerCreate, PlayerResponse
-from src.players.services import auto_create_player
+from src.players.schemas import PlayerResponse
 
 
 router = APIRouter(prefix="/players", tags=["players"])

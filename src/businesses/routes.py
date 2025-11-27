@@ -44,5 +44,5 @@ async def create_business(body: BusinessCreate, db: Session = Depends(get_db)):
 @router.get("/all", response_model=list[BusinessResponse])
 async def get_all_business(db: Session = Depends(get_db)):
     # TODO add more date like owner ext to the response
-    all_business = db.query(Business).all()
+    all_business = db.query(Business).join(Business.owner).all()
     return all_business
