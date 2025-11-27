@@ -4,9 +4,8 @@ from src.players.schemas import PlayerBusinessResponse
 
 
 class PayRoll(str, Enum):
-    first = ("00",)
+    first = "00"
     fifteenth = "15"
-import uuid
 
 
 class BaseBusiness(BaseModel):
