@@ -1,12 +1,8 @@
-import datetime
-from typing import Any, List
-from pydantic import BaseModel, Field, UUID4, EmailStr
+from typing import Any
 from pydantic import BaseModel, UUID4, EmailStr
 
 from src.auth.schemas import UserBase
-from src.banking.schemas import BankAccountResponse
-from src.businesses.schemas import BusinessResponse
-
+from src.banking.schemas import BankAccountResponse 
 
 class BasePlayer(BaseModel):
     pass
@@ -16,44 +12,20 @@ class PlayerCreate(BasePlayer):
     user_name: str | None
     user_email: EmailStr | None
 
-
-class PlayerBusinessResponse(BasePlayer):
-    id: UUID4
-    user_name: str | None
-    created_at: datetime.datetime
-
-    class Config:
-        from_attributes = True
-
-
-class Owner(BaseModel):
-    # player_id: str
-    business: BusinessResponse
-
-    class Config:
-        from_attributes = True
-
-
-class BusinessPlayerResponse(BaseModel):
-    id: UUID4
+class BusinessForPlayer(BaseModel):
     business_name: str
-    # PayRoll: str
-
+    payroll: str | Any
 
 class PlayerResponse(BasePlayer):
     id: UUID4
-    user_info: UserBase
-    bank_account: BankAccountResponse
-    business: List[BusinessResponse]
-
-    class Config:
+    user_info: UserBase 
+    bank_account: BankAccountResponse   
+    business: list[ BusinessForPlayer ]
+    class Config: 
         from_attributes = True
 
 
-class BusinessWithPlayer(BaseModel):
-    business_name: str
-    owner: PlayerResponse
-
+    
 
 class EmployeeBase(BaseModel):
     roll: str

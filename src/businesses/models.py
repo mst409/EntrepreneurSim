@@ -1,8 +1,10 @@
+from typing import List
 import uuid
-from sqlalchemy import Column, DateTime, Float, String, ForeignKey, Uuid
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Float, String, ForeignKey, Uuid
+from sqlalchemy.orm import relationship, Mapped
 from src.database import Base
 
+from src.players.models import players_businesses
 
 
 class Business(Base):
@@ -18,7 +20,7 @@ class Business(Base):
     #payment = Column(Uuid, ForeignKey("players.id"))
 
 
-    owner = relationship("Owners", back_populates="business")
+    owner: Mapped[List["Player"]] = relationship(secondary=players_businesses, back_populates="business") # type: ignore
     employee = relationship("Employee", back_populates="business")
     #bank_account = relationship("BankAccount", back_populates="player", foreign_keys=[bank_account_id])
 

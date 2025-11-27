@@ -1,20 +1,18 @@
 import uuid
 from sqlalchemy import Column, ForeignKey, Table
 import datetime as dt
-from sqlalchemy import Column, ForeignKey, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, ForeignKey,  Table
+from sqlalchemy.orm import relationship, Mapped
 from sqlalchemy.types import Uuid
 
 from src.database import Base
 
-
 players_businesses = Table(
-    "owners",
+    'owners',
     Base.metadata,
-    Column("player_id", Uuid, ForeignKey("players.id"), primary_key=True),
-    Column("business_id", Uuid, ForeignKey("businesses.id"), primary_key=True),
+    Column("player_id", ForeignKey("players.id"), primary_key=True),
+    Column("business_id", ForeignKey("businesses.id"),primary_key=True)
 )
-
 
 class Player(Base):
     __tablename__ = "players"
@@ -28,11 +26,7 @@ class Player(Base):
         "User", back_populates="player", uselist=False, foreign_keys=[user_id]
     )
 
-    bank_account = relationship(
-        "BankAccount", back_populates="player", foreign_keys=[bank_account_id]
-    )
-
-    business = relationship(
-        "Business", secondary=players_businesses, back_populates="owner"
-    )
+    bank_account = relationship("BankAccount", back_populates="player", foreign_keys=[bank_account_id])
+    
+    business: Mapped[list["Business"]] = relationship(secondary=players_businesses, back_populates="owner") # type: ignore
     employer = relationship("Employee", back_populates="player")
