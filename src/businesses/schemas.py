@@ -17,7 +17,6 @@ class BusinessCreate(BaseBusiness):
 
 
 class BusinessResponse(BaseBusiness):
-    # TODO #14 add the owner name to the response model
     id: UUID4
     owner: list[PlayerResponse]
     class Config:
