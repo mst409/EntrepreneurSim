@@ -1,0 +1,23 @@
+from pydantic import BaseModel, Field, UUID4
+from enum import Enum
+
+
+class AccountTypes(str, Enum):
+    Player = 'player'
+    Business = 'business'
+
+
+class BaseBankAccount(BaseModel):
+    capital: float | None = Field(default=30.00)
+    account_number: int = Field()
+    acc_type: AccountTypes | None
+
+
+class BankAccountResponse(BaseBankAccount):
+    id : UUID4
+
+
+class BaseTransaction(BaseModel):
+    amount: float
+    from_acc: UUID4
+    to_acc: UUID4
