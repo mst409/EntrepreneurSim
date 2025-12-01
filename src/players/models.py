@@ -1,6 +1,4 @@
 import uuid
-from sqlalchemy import Column, ForeignKey, Table
-import datetime as dt
 from sqlalchemy import Column, ForeignKey,  Table
 from sqlalchemy.orm import relationship, Mapped
 from sqlalchemy.types import Uuid
@@ -17,14 +15,12 @@ players_businesses = Table(
 class Player(Base):
     __tablename__ = "players"
 
-    id = Column(Uuid(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
-    # user_name = Column(String(15), nullable=True)
+    id = Column(Uuid(as_uuid=True), primary_key=True, 
+                index=True, default=uuid.uuid4)
     user_id = Column(Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=True)
     bank_account_id = Column(Uuid, ForeignKey("bank_accounts.id"), nullable=True)
 
-    user_info = relationship(
-        "User", back_populates="player", uselist=False, foreign_keys=[user_id]
-    )
+    user_info = relationship("User", back_populates="player", uselist=False, foreign_keys=[user_id])
 
     bank_account = relationship("BankAccount", back_populates="player", foreign_keys=[bank_account_id])
     

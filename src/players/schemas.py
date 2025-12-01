@@ -7,14 +7,13 @@ from src.banking.schemas import BankAccountResponse
 class BasePlayer(BaseModel):
     pass
 
-
 class PlayerCreate(BasePlayer):
     user_name: str | None
     user_email: EmailStr | None
 
 class BusinessForPlayer(BaseModel):
     business_name: str
-    payroll: str | Any
+    payroll: str
 
 class PlayerResponse(BasePlayer):
     id: UUID4
@@ -33,11 +32,9 @@ class EmployeeBase(BaseModel):
     # make an enum for wage_types
     wage_type: str
 
-
 class EmployeeCreate(EmployeeBase):
     player_id: UUID4
     business_id: UUID4
-
 
 class EmployeeResponse(EmployeeBase):
     pass

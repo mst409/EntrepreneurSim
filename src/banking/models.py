@@ -15,14 +15,13 @@ class BankAccount(Base):
     acc_type = Column(String)
     current_balance = Column(Float, default=30)
 
-    #player_info = relationship("Player")
     player = relationship("Player", back_populates="bank_account")
 
 class Transaction(Base):
     __tablename__ = "transactions"
-    '''A transaction table, must provide amount, from_acc and to_acc'''
+#    A transaction table, must provide amount, from_acc and to_acc
     id = Column(Uuid(as_uuid=True), primary_key=True, index=True)
     amount = Column(Float, nullable=False)
-    from_acc = Column(Uuid, ForeignKey("players.id"))
-    to_acc = Column(Uuid, ForeignKey("businesses.id"))
+    from_acc = Column(Uuid, ForeignKey("bank_accounts.id"))
+    to_acc = Column(Uuid, ForeignKey("bank_accounts.id"))
     made_at = Column(DateTime, default=dt.datetime.now(dt.timezone.utc))

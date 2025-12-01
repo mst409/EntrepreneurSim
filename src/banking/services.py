@@ -1,13 +1,7 @@
-# from fastapi import Depends
 from sqlalchemy.orm import Session
-
 from random import randrange
 
-# from sqlalchemy import Uuid
-# from src.database import get_db
-# from src.players.models import Player
 from .models import BankAccount
-# from .schemas import AccountTypes, BaseBankAccount
 
 
 def create_account_number():
