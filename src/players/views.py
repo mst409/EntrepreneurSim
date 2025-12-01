@@ -17,23 +17,18 @@ except Exception:
     pass
 
 stmt = select(
-    Player.id,
+    Player.id.label("player_id"),
     User.name.label("name"),
-    # players_businesses,
-    # Business.business_name,
-    BankAccount.account_number,
-).select_from(
-    Player.__table__.join(User, User.id == Player.user_id)
-    # .join(players_businesses, players_businesses.c.player_id == Player.id)
-    # .join(Business, Business.id == players_businesses.c.business_id == )
-    .join(BankAccount, Player.bank_account_id == BankAccount.id)
-)
+).select_from(Player.__table__.join(User, User.id == Player.user_id))
+# for DB thats not SQLite, add 'replace=True'
 view = create_view("user_view", stmt, Base.metadata)
 
 
 try:
 
     class PlayerView(Base):
+        """A view the binds the player_id with the user name"""
+
         __table__ = view
 except Exception as e:
     pass
