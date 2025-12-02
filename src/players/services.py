@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from src.auth.models import User
 from src.players.models import Player
-from src.banking.services import auto_create_bank_account
+from src.banking.services import create_acc
 
 
 
@@ -23,5 +23,5 @@ def auto_create_player(user_name, user_email,
     db.add(new_player)
     db.commit()
     db.refresh(new_player)
-    account_number = auto_create_bank_account(player_id=new_player.id, type="player", db=db)
+    account_number = create_acc(player_id=new_player.id, type="player", db=db)
     return account_number
